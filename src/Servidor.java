@@ -66,11 +66,17 @@ class ServidorCliente implements Runnable{
 					System.out.println("Senha recebida com sucesso!");
 				}
 			}else if(string.equals("TV")) {
-				senhaTV = Servidor.senhas.get(0);
-				removerSenha();
-				PrintStream saida = new PrintStream(socket.getOutputStream());
-				saida.println(senhaTV);
-				saida.close();
+				if(Servidor.senhas.isEmpty()) {
+					PrintStream saida = new PrintStream(socket.getOutputStream());
+					saida.println("Não há senhas!");
+					saida.close();
+				}else {
+					senhaTV = Servidor.senhas.get(0);
+					removerSenha();
+					PrintStream saida = new PrintStream(socket.getOutputStream());
+					saida.println(senhaTV);
+					saida.close();
+				}
 			}
 			
 				entrada.close();
