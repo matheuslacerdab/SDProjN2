@@ -12,6 +12,7 @@ public class TV {
 		Scanner tc = new Scanner(System.in);
 		
 		while(true) {
+			System.out.println("Pressione 1 para continuar:");
 			op = tc.nextInt();
 			switch (op) {
 			case 1:

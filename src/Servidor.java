@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 public class Servidor{
 	public static List<String> senhas = new LinkedList<>();
+	public static String senhaTV;
 	public static void main(String[] args) throws IOException{
 		try {
 			//INSTANCIA DO SERVIDOR SOCKET
@@ -42,7 +43,6 @@ class ServidorCliente implements Runnable{
 		// TODO Auto-generated method stub
 		try {
 			Scanner entrada = new Scanner(socket.getInputStream());
-			
 			String string = entrada.nextLine();
 			
 			if(string.contains("SIM")) {
@@ -53,9 +53,10 @@ class ServidorCliente implements Runnable{
 				}else {
 					PrintStream saida = new PrintStream(socket.getOutputStream());
 					senha = Servidor.senhas.get(0);
+					Servidor.senhaTV = Servidor.senhas.get(0);
+					Servidor.senhas.remove(0);
 					saida.println(senha);
 					saida.close();
-					
 				}
 			}else if(string.contains("N") || (string.contains("P"))){
 				if(string.contains("N")) {
@@ -71,8 +72,7 @@ class ServidorCliente implements Runnable{
 					saida.println("Não há senhas!");
 					saida.close();
 				}else {
-					senhaTV = Servidor.senhas.get(0);
-					removerSenha();
+					senhaTV = Servidor.senhaTV;
 					PrintStream saida = new PrintStream(socket.getOutputStream());
 					saida.println(senhaTV);
 					saida.close();
@@ -87,9 +87,5 @@ class ServidorCliente implements Runnable{
 			e.printStackTrace();
 		}
 	
-	}
-	
-	public void removerSenha() {
-		Servidor.senhas.remove(0);
 	}
 }
